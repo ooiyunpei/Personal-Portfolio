@@ -1,0 +1,361 @@
+/* Core Styling Variables */
+:root {
+    --page-bg: #f8fafc;
+    --card-bg: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --accent-indigo: #4f46e5;
+    
+    /* Brand Colors */
+    --github: #24292e;
+    --linkedin: #0077b5;
+    --instagram: #e1306c;
+    --facebook: #1877f2;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--page-bg);
+    min-height: 100vh;
+}
+
+.page-container {
+    width: 100%;
+}
+
+/* ========================================= */
+/* HERO SECTION FIXED BACKGROUND             */
+/* ========================================= */
+.hero-section {
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+}
+
+.profile-card-content {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    padding: 40px 30px;
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.profile-card-content:hover {
+    transform: translateY(-5px);
+}
+
+.avatar-container {
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    padding: 4px;
+    background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    background-color: #f1f5f9;
+}
+
+.name {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.major {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    line-height: 1.4;
+}
+
+.divider {
+    border: none;
+    height: 1px;
+    background-color: #e2e8f0;
+    margin: 24px auto;
+    width: 80%;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #f8fafc;
+    color: var(--text-secondary);
+    font-size: 1.25rem;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    border: 1px solid #e2e8f0;
+}
+
+.social-icon.github:hover { background-color: var(--github); color: white; border-color: var(--github); }
+.social-icon.linkedin:hover { background-color: var(--linkedin); color: white; border-color: var(--linkedin); }
+.social-icon.facebook:hover { background-color: var(--facebook); color: white; border-color: var(--facebook); }
+.social-icon.instagram:hover {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: white;
+    border-color: transparent;
+}
+
+/* ========================================= */
+/* NEW: GUIDING ARROW STYLING & ANIMATION   */
+/* ========================================= */
+.scroll-arrow {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* Creates the three stacked chevron rows matching the reference art */
+.scroll-arrow span {
+    display: block;
+    width: 24px;
+    height: 24px;
+    border-bottom: 5px solid white;
+    border-right: 5px solid white;
+    transform: rotate(45deg);
+    margin: -10px;
+    animation: arrowPulse 2s infinite;
+}
+
+/* Staggering the visual animation waves */
+.scroll-arrow span:nth-child(2) { animation-delay: -0.2s; }
+.scroll-arrow span:nth-child(3) { animation-delay: -0.4s; }
+
+@keyframes arrowPulse {
+    0% { opacity: 0; transform: rotate(45deg) translate(-20px, -20px); }
+    50% { opacity: 1; }
+    100% { opacity: 0; transform: rotate(45deg) translate(20px, 20px); }
+}
+
+/* ========================================= */
+/* FEATURED WORKS DISPLAY LAYOUT             */
+/* ========================================= */
+.section-title {
+    color: var(--text-primary);
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 80px 0 30px 0;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 60px 24px;
+}
+
+.image-card {
+    height: 360px;
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+
+.image-card:hover { transform: translateY(-5px); }
+
+.card-overlay {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.1) 60%, transparent 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: 24px;
+}
+
+.card-content { color: white; text-align: left; width: 100%; }
+.card-title { font-size: 1.35rem; font-weight: 600; margin-bottom: 4px; }
+.card-subtitle { font-size: 0.85rem; color: rgba(255, 255, 255, 0.8); margin-bottom: 16px; }
+
+.card-btn {
+    display: inline-block;
+    padding: 8px 22px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 30px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    background-color: transparent;
+    transition: all 0.2s ease;
+}
+.card-btn:hover { background-color: white; color: #1a1a1a; }
+
+/* ========================================= */
+/* NEW: INTERNSHIP / ABOUT TWO-COLUMN ZONE   */
+/* ========================================= */
+.about-career-section {
+    background-color: #ffffff; /* Clean distinct section separation */
+    width: 100%;
+    padding: 80px 24px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.career-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Left Content Column */
+.career-info {
+    flex: 1;
+    text-align: left;
+}
+
+.career-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.career-description {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+
+.career-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+/* Action button configurations */
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.primary-btn {
+    background-color: var(--accent-indigo);
+    color: white;
+    border: 1px solid var(--accent-indigo);
+}
+.primary-btn:hover {
+    background-color: #4338ca;
+    transform: translateY(-2px);
+}
+
+.secondary-btn {
+    background-color: transparent;
+    color: var(--linkedin);
+    border: 2px solid var(--linkedin);
+}
+.secondary-btn:hover {
+    background-color: var(--linkedin);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Right Image Column */
+.career-graphic {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vector-image {
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+}
+
+/* Mobile Responsiveness fixes */
+@media (max-width: 768px) {
+    .career-container {
+        flex-direction: column-reverse; /* Pushes image to top on mobile */
+        text-align: center;
+    }
+    .career-info {
+        text-align: center;
+    }
+    .career-actions {
+        justify-content: center;
+    }
+}
+
+/* ========================================= */
+/* FOOTER DESIGN SECTION                     */
+/* ========================================= */
+.site-footer {
+    width: 100%;
+    padding: 30px 24px;
+    background-color: black; /* Matches the clean white of the about section */
+    border-top: 1px solid #f1f5f9; /* Subtle border line separator */
+    text-align: center;
+}
+
+.site-footer p {
+    font-size: 0.9rem;
+    color: white;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}

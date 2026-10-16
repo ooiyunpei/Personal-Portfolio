@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coming Soon | Ooi Yun Pei</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>😉</text></svg>" type="image/svg+xml">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Jomhuria&family=Teachers:ital,wght@0,400..800;1,400..800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            anton: ["Anton", "sans-serif"],
+            jomhuria: ["Jomhuria", "cursive"],
+            teachers: ["Teachers", "sans-serif"],
+            sans: ["Plus Jakarta Sans", "sans-serif"],
+          },
+          colors: {
+            portfolio: {
+              bg: "#C9CEC7",
+              sage: "#95A493",
+              dark: "#161816",
+              card: "#232623",
+              inactive: "#7C837A",
+              darkBrown: "#4A3525",
+              darkBrownHover: "#362417",
+              lightBg: "#e3e3df",
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- React 18, Babel & Lucide CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* 三个点循环往复跳动动画 */
+    @keyframes dotFade {
+      0%, 20% { opacity: 0; }
+      40% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    .animate-dot-1 {
+      animation: dotFade 1.8s infinite ease-in-out;
+      animation-delay: 0.0s;
+    }
+    .animate-dot-2 {
+      animation: dotFade 1.8s infinite ease-in-out;
+      animation-delay: 0.25s;
+    }
+    .animate-dot-3 {
+      animation: dotFade 1.8s infinite ease-in-out;
+      animation-delay: 0.5s;
+    }
+
+    /* 元素缓动浮现动画 */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-fade-up-1 {
+      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .animate-fade-up-2 {
+      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.18s forwards;
+      opacity: 0;
+    }
+    .animate-fade-up-3 {
+      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+      opacity: 0;
+    }
+  </style>
+</head>
+
+<body class="bg-[#C9CEC7] text-[#161816] selection:bg-[#161816] selection:text-[#C9CEC7] overflow-hidden antialiased">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function ComingSoonApp() {
+      const [menuOpen, setMenuOpen] = useState(false);
+      const [currentPage, setCurrentPage] = useState("Projects");
+
+      const navItems = [
+        { name: "Volunteering", url: "volunteering.html" },
+        { name: "Projects", url: "projects.html" },
+        { name: "Home", url: "index.html" },
+        { name: "Experiences", url: "experiences.html" },
+        { name: "Contact", url: "contact.html" }
+      ];
+
+      // 根据 URL 路径自动识别当前页面并高亮，无需手动改代码
+      useEffect(() => {
+        const path = window.location.pathname.toLowerCase();
+        if (path.includes("volunteering")) setCurrentPage("Volunteering");
+        else if (path.includes("experiences")) setCurrentPage("Experiences");
+        else if (path.includes("contact")) setCurrentPage("Contact");
+        else if (path.includes("projects")) setCurrentPage("Projects");
+        else if (path.includes("index") || path === "/" || path.endsWith("/")) setCurrentPage("Home");
+
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+      }, []);
+
+      return (
+        <div className="relative h-screen w-full flex flex-col justify-between pt-4 md:pt-6 pb-6 px-6 sm:px-10 md:px-12 select-none overflow-hidden">
+
+          {/* 1. FLOATING BURGER BUTTON (手机端) */}
+          <div className="md:hidden fixed top-[7%] right-5 z-[9999]">
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className={`w-[88px] h-[88px] flex items-center justify-center transition-all duration-300 ${
+                menuOpen
+                  ? "bg-transparent border-transparent shadow-none"
+                  : "bg-portfolio-bg/95 backdrop-blur border border-portfolio-dark/20 rounded-full shadow-lg"
+              }`}
+              aria-label="Toggle Menu"
+            >
+              <div className="w-8 h-6 relative flex flex-col justify-between items-center">
+                <span
+                  style={{ height: "3px" }}
+                  className={`w-full rounded-full transition-all duration-300 ease-in-out transform origin-center ${
+                    menuOpen
+                      ? "absolute left-0 top-1/2 rotate-45 -translate-y-1/2 bg-white"
+                      : "relative bg-portfolio-dark"
+                  }`}
+                />
+                <span
+                  style={{ height: "3px" }}
+                  className={`w-full rounded-full transition-all duration-200 ease-in-out ${
+                    menuOpen
+                      ? "opacity-0 scale-x-0 -translate-y-1/2 bg-white"
+                      : "relative opacity-100 scale-x-100 bg-portfolio-dark"
+                  }`}
+                />
+                <span
+                  style={{ height: "3px" }}
+                  className={`w-full rounded-full transition-all duration-300 ease-in-out transform origin-center ${
+                    menuOpen
+                      ? "absolute left-0 top-1/2 -rotate-45 -translate-y-1/2 bg-white"
+                      : "relative bg-portfolio-dark"
+                  }`}
+                />
+              </div>
+            </button>
+          </div>
+
+          {/* 2. FULL DARK OVERLAY (手机端菜单抽屉) */}
+          <div
+            className={`fixed inset-0 z-[9998] bg-[#121412]/95 backdrop-blur-md transition-all duration-500 flex flex-col justify-between p-8 sm:p-12 md:p-20 ${
+              menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+            }`}
+          >
+            <div className="w-full"></div>
+            <div className="flex flex-col items-end gap-4 sm:gap-6 my-auto pr-6 sm:pr-10 md:pr-16 text-right">
+              {navItems.map((item, idx) => {
+                const isSelected = item.name === currentPage;
+                return (
+                  <a
+                    key={item.name}
+                    href={item.url}
+                    style={{
+                      transitionDelay: menuOpen ? `${idx * 60}ms` : "0ms",
+                      transform: menuOpen ? "translateX(0)" : "translateX(60px)",
+                      opacity: menuOpen ? 1 : 0
+                    }}
+                    className={`font-jomhuria text-4xl sm:text-5xl md:text-6xl tracking-wider uppercase transition-all duration-300 ${
+                      isSelected
+                        ? "text-white font-bold scale-105"
+                        : "text-white/60 hover:text-white"
+                    }`}
+                  >
+                    {item.name}
+                  </a>
+                );
+              })}
+            </div>
+            <div className="border-t border-white/10 pt-4 text-center font-anton text-xs text-white/40 tracking-wider">
+              2026 © Ooi Yun Pei
+            </div>
+          </div>
+
+          {/* 3. TOP NAVIGATION (与 Home 1:1 像素级参数对齐) */}
+          <nav className="hidden md:flex justify-center items-center gap-7 sm:gap-12 md:gap-16 z-30 pt-2 px-6 w-full">
+            {navItems.map((item) => {
+              const isSelected = item.name === currentPage;
+              return (
+                <a
+                  key={item.name}
+                  href={item.url}
+                  className={`font-jomhuria text-2xl sm:text-3xl md:text-[34px] leading-none tracking-wider uppercase transition-all duration-200 ${
+                    isSelected
+                      ? "text-portfolio-dark scale-105 font-bold"
+                      : "text-[#7C837A] hover:text-portfolio-dark font-normal"
+                  }`}
+                >
+                  {item.name}
+                </a>
+              );
+            })}
+          </nav>
+
+          {/* 4. CENTER STAGE (带淡入浮动动画) */}
+          <main className="flex flex-col items-center justify-center my-auto z-10 text-center px-4">
+            
+            {/* 标题淡入 */}
+            <h1 className="animate-fade-up-1 font-sans font-medium text-5xl sm:text-7xl md:text-8xl tracking-tight text-portfolio-dark flex items-baseline">
+              <span>Coming Soon</span>
+              <span className="inline-flex tracking-normal ml-0.5">
+                <span className="animate-dot-1">.</span>
+                <span className="animate-dot-2">.</span>
+                <span className="animate-dot-3">.</span>
+              </span>
+            </h1>
+
+            {/* 副标题淡入 */}
+            <p className="animate-fade-up-2 font-sans text-sm sm:text-base md:text-lg text-portfolio-dark/80 mt-4 sm:mt-6 font-normal">
+              This page is currently under constructions
+            </p>
+
+            {/* 两个社交 Icon 淡入 */}
+            <div className="animate-fade-up-3 flex items-center justify-center gap-3 sm:gap-4 mt-8 sm:mt-10">
+              <a
+                href="https://www.linkedin.com/in/ooi-yun-pei-53b4362b8/"
+                target="_blank"
+                rel="noreferrer"
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl border border-portfolio-dark/60 flex items-center justify-center text-portfolio-dark hover:bg-portfolio-dark hover:text-white transition-all duration-200 shadow-sm"
+                aria-label="LinkedIn"
+              >
+                <svg className="w-5 h-5 fill-current transition-colors" viewBox="0 0 24 24">
+                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+                </svg>
+              </a>
+
+              <a
+                href="https://github.com/ooiyunpei"
+                target="_blank"
+                rel="noreferrer"
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl border border-portfolio-dark/60 flex items-center justify-center text-portfolio-dark hover:bg-portfolio-dark hover:text-white transition-all duration-200 shadow-sm"
+                aria-label="GitHub"
+              >
+                <svg className="w-5 h-5 fill-current transition-colors" viewBox="0 0 24 24">
+                  <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+                </svg>
+              </a>
+            </div>
+
+          </main>
+
+          {/* 5. FOOTER */}
+          <footer className="w-full flex justify-between items-center text-xs sm:text-sm font-sans font-medium text-portfolio-dark z-20 px-2 sm:px-4">
+            <a
+              href="index.html"
+              className="group flex items-center gap-1.5 transition-all duration-200 hover:text-black"
+            >
+              <span className="transition-transform duration-200 group-hover:-translate-x-1">←</span>
+              <span className="group-hover:underline underline-offset-4">Back to Home</span>
+            </a>
+
+            <a
+              href="index.html"
+              className="underline underline-offset-4 hover:opacity-80 transition-opacity"
+            >
+              Code by Yunpei
+            </a>
+          </footer>
+
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<ComingSoonApp />);
+  </script>
+</body>
+</html>
