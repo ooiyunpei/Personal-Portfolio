@@ -46,6 +46,13 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
+  <!-- 引入拆分出的组件与数据 -->
+  <script type="text/babel" src="Home/Preloader.js"></script>
+  <script type="text/babel" src="Home/TopBar.js"></script>
+  <script src="Home/testimonialsData.js"></script>
+  <script type="text/babel" src="Home/Testimonials.js"></script>
+  <script type="text/babel" src="Home/Footer.js"></script>
+
   <style>
     .no-scrollbar::-webkit-scrollbar {
       display: none;
@@ -133,7 +140,6 @@
   <script type="text/babel">
     const { useState, useEffect, useRef } = React;
 
-    const HELLO_WORDS = ["Hello", "你好", "Selamat Pagi", "Bonjour", "Hola", "Konnichiwa", "Guten Tag", "Ciao", "Olá"];
     const ROLES = ["SOFTWARE ENGINEERING", "DESIGNER", "ROBLOX DEVELOPER", "UI/UX DESIGNER"];
 
     const PROJECTS_DATA = [
@@ -209,14 +215,12 @@
 
     function App() {
       const [loading, setLoading] = useState(true);
-      const [helloIndex, setHelloIndex] = useState(0);
       const [showBurger, setShowBurger] = useState(false);
       const [menuOpen, setMenuOpen] = useState(false);
       const [eduVisible, setEduVisible] = useState(false);
       const [aboutScrollOffset, setAboutScrollOffset] = useState(0);
 
       const projectsRef = useRef(null);
-      const testimonialsRef = useRef(null);
       const educationRef = useRef(null);
       const aboutRef = useRef(null);
 
@@ -225,23 +229,11 @@
       const [projectsStartX, setProjectsStartX] = useState(0);
       const [projectsScrollLeft, setProjectsScrollLeft] = useState(0);
 
-      // Testimonials 鼠标拖拽状态
-      const [isDragging, setIsDragging] = useState(false);
-      const [startX, setStartX] = useState(0);
-      const [scrollLeft, setScrollLeft] = useState(0);
-
       const typedRole = useTypewriter(ROLES);
 
       useEffect(() => {
-        const interval = setInterval(() => {
-          setHelloIndex((prev) => (prev < HELLO_WORDS.length - 1 ? prev + 1 : prev));
-        }, 160);
-
         const timer = setTimeout(() => setLoading(false), 1800);
-        return () => {
-          clearInterval(interval);
-          clearTimeout(timer);
-        };
+        return () => clearTimeout(timer);
       }, []);
 
       // 滚动监听
@@ -317,24 +309,6 @@
         projectsRef.current.scrollLeft = projectsScrollLeft - walk;
       };
 
-      // Testimonials 拖拽逻辑
-      const handleMouseDown = (e) => {
-        setIsDragging(true);
-        setStartX(e.pageX - testimonialsRef.current.offsetLeft);
-        setScrollLeft(testimonialsRef.current.scrollLeft);
-      };
-
-      const handleMouseLeave = () => setIsDragging(false);
-      const handleMouseUp = () => setIsDragging(false);
-
-      const handleMouseMove = (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        const x = e.pageX - testimonialsRef.current.offsetLeft;
-        const walk = (x - startX) * 1.5;
-        testimonialsRef.current.scrollLeft = scrollLeft - walk;
-      };
-
       const scrollProjects = (direction) => {
         if (projectsRef.current) {
           const scrollAmount = direction === "left" ? -380 : 380;
@@ -361,104 +335,17 @@
         { name: "Contact", url: "contact.html" }
       ];
 
-      const burgerNavItems = [
-        { name: "Home", url: "index.html" },
-        { name: "Experiences", url: "experiences.html" },
-        { name: "Projects", url: "projects.html" },
-        { name: "Volunteering", url: "volunteering.html" },
-        { name: "Contact", url: "contact.html" }
-      ];
-
-      const burgerDesktopClass = !menuOpen && !showBurger
-        ? "md:opacity-0 md:-translate-y-6 md:scale-90 md:pointer-events-none"
-        : "md:opacity-100 md:translate-y-0 md:scale-100 md:pointer-events-auto";
-
       return (
         <div className="relative w-full bg-portfolio-bg text-portfolio-dark font-sans">
 
-          {/* 1. INTRO PRELOADER */}
-          {loading && (
-            <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-portfolio-dark text-white">
-              <h1 className="text-6xl md:text-8xl font-anton tracking-wider transition-all duration-200">
-                {HELLO_WORDS[helloIndex]}
-              </h1>
-            </div>
-          )}
+          {/* 1. INTRO PRELOADER (组件) */}
+          <Preloader loading={loading} />
 
-          {/* 2. FLOATING BURGER BUTTON */}
-          <div
-            className={`fixed top-[7%] right-5 md:top-6 md:right-12 z-[9999] transition-all duration-500 transform opacity-100 translate-y-0 scale-100 pointer-events-auto ${burgerDesktopClass}`}
-          >
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className={`w-[88px] h-[88px] md:w-20 md:h-20 flex items-center justify-center transition-all duration-300 ${
-                menuOpen
-                  ? "bg-transparent border-transparent shadow-none"
-                  : "bg-portfolio-bg/95 backdrop-blur border border-portfolio-dark/20 rounded-full shadow-lg hover:bg-portfolio-dark group"
-              }`}
-              aria-label="Toggle Menu"
-            >
-              <div className="w-8 h-6 md:w-8 md:h-6 relative flex flex-col justify-between items-center">
-                <span
-                  style={{ height: "3px" }}
-                  className={`w-full rounded-full transition-all duration-300 ease-in-out transform origin-center ${
-                    menuOpen
-                      ? "absolute left-0 top-1/2 rotate-45 -translate-y-1/2 bg-white"
-                      : "relative bg-portfolio-dark group-hover:bg-white"
-                  }`}
-                />
-                <span
-                  style={{ height: "3px" }}
-                  className={`w-full rounded-full transition-all duration-200 ease-in-out ${
-                    menuOpen
-                      ? "opacity-0 scale-x-0 -translate-y-1/2 bg-white"
-                      : "relative opacity-100 scale-x-100 bg-portfolio-dark group-hover:bg-white"
-                  }`}
-                />
-                <span
-                  style={{ height: "3px" }}
-                  className={`w-full rounded-full transition-all duration-300 ease-in-out transform origin-center ${
-                    menuOpen
-                      ? "absolute left-0 top-1/2 -rotate-45 -translate-y-1/2 bg-white"
-                      : "relative bg-portfolio-dark group-hover:bg-white"
-                  }`}
-                />
-              </div>
-            </button>
-          </div>
+          {/* 2. TOPBAR & FLOATING BURGER & FULL DARK OVERLAY (组件) */}
+          <TopBar showBurger={showBurger} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
-          {/* 3. FULL DARK OVERLAY */}
-          <div
-            className={`fixed inset-0 z-[9998] bg-[#121412]/95 backdrop-blur-md transition-all duration-500 flex flex-col justify-between p-8 sm:p-12 md:p-20 ${
-              menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-            }`}
-          >
-            <div className="w-full"></div>
-            <div className="flex flex-col items-end gap-4 sm:gap-6 my-auto pr-6 sm:pr-10 md:pr-16 text-right">
-              {burgerNavItems.map((item, idx) => (
-                <a
-                  key={item.name}
-                  href={item.url}
-                  style={{
-                    transitionDelay: menuOpen ? `${idx * 60}ms` : "0ms",
-                    transform: menuOpen ? "translateX(0)" : "translateX(60px)",
-                    opacity: menuOpen ? 1 : 0
-                  }}
-                  className="font-jomhuria text-4xl sm:text-5xl md:text-6xl tracking-wider text-white/95 hover:text-portfolio-sage hover:translate-x-[-12px] transition-all duration-300 select-none uppercase leading-none"
-                >
-                  {item.name}
-                </a>
-              ))}
-            </div>
-            <div className="border-t border-white/10 pt-4 text-center font-anton text-xs text-white/40 tracking-wider">
-              2026 © Ooi Yun Pei
-            </div>
-          </div>
-
-          {/* 4. HERO SECTION */}
+          {/* 3. HERO SECTION */}
           <section id="hero" className="relative h-screen min-h-[680px] max-md:h-[80vh] max-md:min-h-[620px] w-full flex flex-col justify-between pt-4 md:pt-6 pb-4 overflow-hidden select-none">
-            
-            {/* Top Navigation Bar */}
             <nav className="hidden md:flex justify-center items-center gap-7 sm:gap-12 md:gap-16 z-30 pt-2 px-6">
               {topNavItems.map((item) => {
                 const isActive = item.name === "Home";
@@ -478,22 +365,15 @@
               })}
             </nav>
 
-            {/* Central Stage */}
             <div className="absolute inset-x-0 top-[7%] md:relative md:top-auto w-full z-10 md:pt-16 md:my-auto flex flex-col items-center">
-              
               <div className="relative flex flex-col items-center md:inline-flex w-full md:w-max max-w-[96vw] px-8 md:px-0">
-                
-                {/* 1. 名字 Wipe-Up */}
                 <div className="wipe-mask self-start w-full md:self-auto md:w-auto text-left md:text-center">
                   <h1 className="wipe-title visible font-anton text-[13vw] md:text-[17.5vw] leading-none tracking-tight text-portfolio-dark select-none uppercase whitespace-nowrap">
                     OOI YUN PEI
                   </h1>
                 </div>
 
-                {/* Sub-row */}
                 <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center w-full mt-6 md:mt-12 px-0 gap-3 md:gap-0">
-                  
-                  {/* 2. 两个 Icon */}
                   <div className="flex items-center justify-start gap-2 order-2 md:order-2 max-md:relative max-md:z-30">
                     <a
                       href="https://www.linkedin.com/in/ooi-yun-pei-53b4362b8/"
@@ -520,7 +400,6 @@
                     </a>
                   </div>
 
-                  {/* 3. 打字文字 */}
                   <div className="w-auto text-left md:w-auto md:text-left order-1 md:order-1">
                     <span className="md:hidden inline-flex items-center whitespace-nowrap font-jomhuria text-3xl font-normal text-portfolio-dark tracking-wide leading-none min-h-[1.6rem]">
                       {typedRole}<span className="inline-block w-[2px] h-5 bg-portfolio-dark ml-1 animate-cursor align-middle"></span>
@@ -530,17 +409,11 @@
                       <span className="inline-block w-[2px] h-8 bg-portfolio-dark ml-1 animate-cursor"></span>
                     </span>
                   </div>
-
                 </div>
-
               </div>
-
             </div>
 
-            {/* 人像与按钮 */}
             <div className="absolute inset-x-0 bottom-0 flex flex-col items-center justify-end z-20 pointer-events-none">
-              
-              {/* 人像 */}
               <div className="w-[360px] sm:w-[380px] md:w-[480px] lg:w-[530px] h-[56vh] sm:h-[56vh] md:h-[76vh] relative flex items-end justify-center">
                 <img
                   src="public/assets/Yunpei_Hero.png"
@@ -550,7 +423,6 @@
                 />
               </div>
 
-              {/* 按钮 */}
               <div className="absolute bottom-[6vh] sm:bottom-10 md:bottom-16 flex items-center justify-center gap-8 sm:gap-4 z-30 pointer-events-auto shadow-2xl">
                 <a
                   href="experiences.html"
@@ -566,18 +438,15 @@
                 </a>
               </div>
             </div>
-
           </section>
 
-          {/* 6. ABOUT ME SECTION */}
+          {/* 4. ABOUT ME SECTION */}
           <section
             id="about"
             ref={aboutRef}
-            className="sticky top-0 min-h-[105vh] bg-portfolio-sage text-portfolio-dark flex flex-col justify-center px-8 sm:px-16 md:px-24 py-16 sm:py-20 md:py-24 z-10 shadow-2xl overflow-hidden"
+            className="relative min-h-[105vh] bg-portfolio-sage text-portfolio-dark flex flex-col justify-center px-8 sm:px-16 md:px-24 py-16 sm:py-20 md:py-24 shadow-2xl overflow-hidden"
           >
             <div className="w-full max-w-7xl mx-auto my-auto flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-10 lg:gap-16 xl:gap-20">
-              
-              {/* 左侧文字区 */}
               <div className="w-full lg:w-1/2 flex flex-col justify-center">
                 <div className="wipe-mask mb-4 sm:mb-6 md:mb-8">
                   <h2 className="wipe-title text-6xl sm:text-7xl md:text-8xl font-anton tracking-tight uppercase">
@@ -590,10 +459,7 @@
                 </p>
               </div>
 
-              {/* 右侧：三张直角长方形卡片 */}
               <div className="apple-float w-full lg:w-1/2 flex flex-col items-center lg:items-end justify-center gap-2.5 sm:gap-3.5 md:gap-5" style={{ transitionDelay: '250ms' }}>
-                
-                {/* 卡片 1 (ABT_SEC_PIC.jpeg - 画面上提：头顶留有舒适空间，人物主体居中，左侧壁画完整) */}
                 <div
                   className="w-full max-w-[420px] h-[85px] sm:h-[120px] md:h-[145px] lg:h-[160px] rounded-none overflow-hidden border-[1.5px] border-portfolio-dark/30 shadow-md bg-portfolio-bg/80 transition-transform duration-500 ease-out shrink-0"
                   style={{ transform: `translateY(${aboutScrollOffset * 0.3}px)` }}
@@ -609,7 +475,6 @@
                   />
                 </div>
 
-                {/* 卡片 2 (ABT_SEC_TUTOR.jpeg) */}
                 <div
                   className="w-full max-w-[420px] h-[85px] sm:h-[120px] md:h-[145px] lg:h-[160px] rounded-none overflow-hidden border-[1.5px] border-portfolio-dark/30 shadow-md bg-portfolio-bg/80 transition-transform duration-500 ease-out shrink-0"
                   style={{ transform: `translateY(${aboutScrollOffset * 0.6}px)` }}
@@ -625,7 +490,6 @@
                   />
                 </div>
 
-                {/* 卡片 3 (ABT_SEC_D4P.jpeg) */}
                 <div
                   className="w-full max-w-[420px] h-[85px] sm:h-[120px] md:h-[145px] lg:h-[160px] rounded-none overflow-hidden border-[1.5px] border-portfolio-dark/30 shadow-md bg-portfolio-bg/80 transition-transform duration-500 ease-out shrink-0"
                   style={{ transform: `translateY(${aboutScrollOffset}px)` }}
@@ -640,32 +504,25 @@
                     }}
                   />
                 </div>
-
               </div>
-
             </div>
           </section>
 
-          {/* 7. EDUCATION SECTION */}
+          {/* 5. EDUCATION SECTION */}
           <section
             id="education"
             ref={educationRef}
-            className="sticky top-0 min-h-screen w-full bg-[#0b0c0b] text-white flex flex-col justify-between pt-20 sm:pt-24 md:pt-28 pb-10 sm:pb-14 z-20 shadow-2xl overflow-hidden"
+            className="relative min-h-screen w-full bg-[#0b0c0b] text-white flex flex-col justify-between pt-20 sm:pt-24 md:pt-28 pb-10 sm:pb-14 shadow-2xl overflow-hidden"
           >
             <div className="w-full flex-1 flex flex-col justify-center px-8 sm:px-16 md:px-24">
-              
-              {/* Wipe-up 标题 */}
               <div className="wipe-mask mb-8 sm:mb-12 md:mb-14">
                 <h2 className="wipe-title text-6xl sm:text-7xl md:text-8xl font-anton tracking-tight text-[#C9CEC7] uppercase">
                   EDUCATION
                 </h2>
               </div>
 
-              {/* 学历栏 (Apple 浮现) */}
               <div className="apple-float mb-8 sm:mb-12 md:mb-14 w-full" style={{ transitionDelay: '120ms' }}>
                 <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-0">
-                  
-                  {/* Bachelor */}
                   <div className="lg:pr-8">
                     <h3 className="text-lg sm:text-xl md:text-[22px] font-bold font-sans tracking-tight text-[#C9CEC7] whitespace-normal sm:whitespace-nowrap leading-snug">
                       Bachelor of Science in Software Engineering (Hons)
@@ -675,7 +532,6 @@
                     </p>
                   </div>
 
-                  {/* 中间分割线与 Diploma */}
                   <div className="lg:border-l lg:border-white/20 lg:pl-8">
                     <h3 className="text-lg sm:text-xl md:text-[22px] font-bold font-sans tracking-tight text-[#C9CEC7] whitespace-normal sm:whitespace-nowrap leading-snug">
                       Diploma in Computer Science
@@ -684,17 +540,14 @@
                       2023 — 2025
                     </p>
                   </div>
-
                 </div>
               </div>
 
-              {/* 描述与 Logo (Apple 浮现) */}
               <div className="apple-float flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 sm:gap-12 w-full mb-8 sm:mb-12" style={{ transitionDelay: '240ms' }}>
                 <p className="font-teachers text-white/80 max-w-3xl text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed">
                   Focusing on <strong>scalable frontend architecture</strong>, robust full-stack systems, and <strong>human-centered UI/UX design</strong>. Passionate about engineering <strong>high-performance software solutions</strong> and translating complex real-world requirements into clean, seamless digital experiences.
                 </p>
 
-                {/* INTI & Coventry 双 Logo */}
                 <div className="flex items-center justify-between sm:justify-start gap-4 sm:gap-6 shrink-0 max-w-full bg-white/5 backdrop-blur-md px-4 sm:px-6 py-3 sm:py-3.5 rounded-2xl border border-white/10 lg:ml-auto">
                   <img
                     src="public/assets/INTI_Logo.png"
@@ -715,18 +568,13 @@
                   />
                 </div>
               </div>
-
             </div>
 
-            {/* 底部箭头时间轴 */}
             <div className="w-full border-t border-b border-white/15 py-4 sm:py-5 px-8 sm:px-16 md:px-24 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 sm:gap-4 select-none font-sans text-xs sm:text-sm tracking-wider uppercase bg-[#0b0c0b]">
-              
-              {/* 左端文字 */}
               <span className="text-[#C9CEC7]/90 font-medium whitespace-nowrap shrink-0">
                 Computer Science / 2023
               </span>
 
-              {/* 中间自适应箭头线轨道 */}
               <div className="flex-1 w-full md:w-auto mx-0 md:mx-6 flex items-center relative overflow-hidden py-1">
                 <div className="w-full h-[1px] bg-white/20 relative flex items-center">
                   <div className={`absolute inset-0 bg-[#C9CEC7] ${eduVisible ? 'animate-arrow-draw' : 'scale-x-0 opacity-0'}`} />
@@ -736,29 +584,22 @@
                 </svg>
               </div>
 
-              {/* 右端文字 */}
               <span className="text-[#C9CEC7] font-semibold whitespace-nowrap shrink-0">
                 Software Engineering — Now (3 Years)
               </span>
-
             </div>
           </section>
 
-          {/* 8. HELP SECTION */}
-          <section className="sticky top-0 min-h-screen md:h-screen w-full bg-portfolio-sage text-portfolio-dark flex flex-col justify-center px-8 sm:px-16 md:px-24 pt-16 sm:pt-20 md:pt-24 pb-20 sm:pb-24 md:pb-28 z-30 shadow-2xl overflow-y-auto lg:overflow-visible">
+          {/* 6. HELP SECTION */}
+          <section className="relative min-h-screen md:h-screen w-full bg-portfolio-sage text-portfolio-dark flex flex-col justify-center px-8 sm:px-16 md:px-24 pt-16 sm:pt-20 md:pt-24 pb-20 sm:pb-24 md:pb-28 shadow-2xl overflow-y-auto lg:overflow-visible">
             <div className="w-full my-auto flex flex-col justify-center">
-              
-              {/* Wipe-up 标题 */}
               <div className="wipe-mask mb-8 sm:mb-12 md:mb-16">
                 <h2 className="wipe-title text-6xl sm:text-7xl md:text-8xl font-anton tracking-tight uppercase text-portfolio-dark">
                   HOW CAN I HELP YOU?
                 </h2>
               </div>
 
-              {/* 三列网格 (Apple 错落浮现) */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 md:gap-10 lg:gap-14 w-full">
-                
-                {/* 01. Design */}
                 <div className="apple-float flex flex-col" style={{ transitionDelay: '100ms' }}>
                   <div className="border-t border-portfolio-dark/25 pt-3 sm:pt-4 mb-3 sm:mb-6 md:mb-8">
                     <span className="font-sans text-sm sm:text-base md:text-xl font-bold tracking-wider text-portfolio-dark/70 block">
@@ -773,7 +614,6 @@
                   </p>
                 </div>
 
-                {/* 02. Development */}
                 <div className="apple-float flex flex-col" style={{ transitionDelay: '200ms' }}>
                   <div className="border-t border-portfolio-dark/25 pt-3 sm:pt-4 mb-3 sm:mb-6 md:mb-8">
                     <span className="font-sans text-sm sm:text-base md:text-xl font-bold tracking-wider text-portfolio-dark/70 block">
@@ -788,7 +628,6 @@
                   </p>
                 </div>
 
-                {/* 03. The full package */}
                 <div className="apple-float flex flex-col" style={{ transitionDelay: '300ms' }}>
                   <div className="border-t border-portfolio-dark/25 pt-3 sm:pt-4 mb-3 sm:mb-6 md:mb-8">
                     <span className="font-sans text-sm sm:text-base md:text-xl font-bold tracking-wider text-portfolio-dark/70 block">
@@ -803,16 +642,12 @@
                     A complete software product from concept to implementation—that’s what makes me stand out. My combined UI/UX design sense and software engineering skills enable me to create outstanding projects.
                   </p>
                 </div>
-
               </div>
-
             </div>
           </section>
 
-          {/* 9. PROJECTS SECTION */}
-          <section id="projects" className="relative min-h-screen w-full bg-[#0b0c0b] text-white flex flex-col justify-between py-24 sm:py-32 z-40 overflow-hidden shadow-2xl">
-            
-            {/* 顶部标题行 */}
+          {/* 7. PROJECTS SECTION */}
+          <section id="projects" className="relative min-h-screen w-full bg-[#0b0c0b] text-white flex flex-col justify-between py-24 sm:py-32 overflow-hidden shadow-2xl">
             <div className="px-8 sm:px-16 md:px-24 flex justify-between items-center mb-10 sm:mb-14">
               <div className="wipe-mask">
                 <h2 className="wipe-title text-6xl sm:text-7xl md:text-8xl font-anton tracking-tight text-[#C9CEC7] uppercase">
@@ -837,7 +672,6 @@
               </div>
             </div>
 
-            {/* 卡片滚动区域 */}
             <div
               ref={projectsRef}
               onMouseDown={handleProjectsMouseDown}
@@ -856,7 +690,6 @@
                     index === 0 ? "ml-8 sm:ml-16 md:ml-24" : ""
                   } ${index === PROJECTS_DATA.length - 1 ? "mr-8 sm:mr-16 md:mr-24" : ""}`}
                 >
-                  {/* 背景图 + 暗角 */}
                   <img
                     src={project.image}
                     alt={project.title}
@@ -867,7 +700,6 @@
                   />
                   <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/90 pointer-events-none" />
 
-                  {/* 顶部文字 */}
                   <div className="relative z-10 space-y-1 font-sans">
                     <span className="block text-xs sm:text-xs font-semibold tracking-wider text-white/75 uppercase">
                       {project.subtitle}
@@ -877,7 +709,6 @@
                     </h3>
                   </div>
 
-                  {/* 底部信息 + 圆形按钮 */}
                   <div className="relative z-10 flex justify-between items-end font-sans">
                     <p className="text-xs sm:text-xs text-white/70 font-medium">
                       {project.category}
@@ -909,121 +740,11 @@
             <div className="w-full"></div>
           </section>
 
-          {/* 10. TESTIMONIALS SECTION (Footer 名字紧贴头像，头像尺寸放大) */}
-          <section className="relative w-full bg-[#e3e3df] text-portfolio-dark pt-24 pb-16 sm:pb-20 z-40 overflow-hidden shadow-2xl">
-            
-            <div className="px-8 sm:px-16 md:px-24">
-              <div className="wipe-mask mb-16 sm:mb-20">
-                <h2 className="wipe-title text-6xl sm:text-7xl md:text-8xl font-anton tracking-tight">
-                  TESTIMONIALS
-                </h2>
-              </div>
-            </div>
+          {/* 8. TESTIMONIALS SECTION (独立 section) */}
+          <Testimonials />
 
-            {/* 左右拖拽容器 */}
-            <div className="apple-float w-full" style={{ transitionDelay: '150ms' }}>
-              <div
-                ref={testimonialsRef}
-                onMouseDown={handleMouseDown}
-                onMouseLeave={handleMouseLeave}
-                onMouseUp={handleMouseUp}
-                onMouseMove={handleMouseMove}
-                className="w-full flex overflow-x-auto no-scrollbar select-none cursor-grab active:cursor-grabbing"
-              >
-                {[1, 2, 3, 4].map((item, index) => (
-                  <div
-                    key={item}
-                    className={`w-[85vw] sm:w-[60vw] md:w-[48vw] lg:w-[42vw] shrink-0 border-r border-[#161816]/30 flex flex-col justify-between py-2 pointer-events-none ${
-                      index === 0 ? "pl-8 sm:pl-16 md:pl-24 pr-8 sm:pr-14" : "px-8 sm:px-14"
-                    }`}
-                  >
-                    <div className="space-y-6 font-teachers text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed text-portfolio-dark/95">
-                      <p>
-                        “Yun Pei performed exceptionally well during his internship. As an intern, I didn't expect perfection. My priority was for him to learn and grow, not just serve as an extra pair of hands.”
-                      </p>
-                      <p>
-                        “However, Yun Pei exceeded expectations by completing every task patiently and handling every detail I assigned to him with great care.”
-                      </p>
-                    </div>
-                    
-                    <div className="mt-14">
-                      <h4 className="font-sans font-bold text-sm sm:text-base md:text-lg text-portfolio-dark">
-                        Howard Chin, <span className="font-normal text-portfolio-dark/85">Technical Executive at Genesis Tech Solutions</span>
-                      </h4>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* 底部拓展区 (名字紧贴头像，头像放大) */}
-            <div className="px-6 sm:px-16 md:px-24 mt-16 sm:mt-24 md:mt-28 apple-float" style={{ transitionDelay: '250ms' }}>
-              
-              {/* 大号 Social Icons 按钮组 */}
-              <div className="flex flex-wrap items-center gap-3.5 sm:gap-5 mb-10 sm:mb-16 md:mb-20">
-                <span className="px-5 sm:px-8 py-2 sm:py-3 rounded-full border-[1.8px] border-portfolio-dark text-sm sm:text-lg font-sans font-semibold text-portfolio-dark cursor-default select-none">
-                  Socials
-                </span>
-
-                <a
-                  href="https://www.linkedin.com/in/ooi-yun-pei-53b4362b8/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-11 h-11 sm:w-14 sm:h-14 rounded-full border-[1.8px] border-portfolio-dark flex items-center justify-center text-portfolio-dark hover:bg-portfolio-dark hover:text-white transition-all duration-200 shadow-sm"
-                  aria-label="LinkedIn"
-                >
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6 fill-current" viewBox="0 0 24 24">
-                    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
-                  </svg>
-                </a>
-
-                <a
-                  href="https://github.com/ooiyunpei"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-[1.8px] border-portfolio-dark flex items-center justify-center text-portfolio-dark hover:bg-portfolio-dark hover:text-white transition-all duration-200 shadow-sm"
-                  aria-label="GitHub"
-                >
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5 fill-current" viewBox="0 0 24 24">
-                    <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
-                  </svg>
-                </a>
-              </div>
-
-              {/* 名字 + 圆形头像 (去除两端拉伸，紧凑排列，放大头像) */}
-              <div className="flex items-center flex-nowrap justify-start gap-3 sm:gap-6 md:gap-8 mb-12 sm:mb-20 md:mb-24 w-full">
-                <h1 className="font-anton text-[13.5vw] sm:text-[14.5vw] md:text-[12vw] leading-none tracking-tight text-portfolio-dark select-none uppercase whitespace-nowrap shrink-0">
-                  OOI YUN PEI
-                </h1>
-
-                {/* 正圆卡通头像（手机端放大至 w-20 h-20） */}
-                <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-44 md:h-44 rounded-full overflow-hidden shrink-0 shadow-lg border-2 border-portfolio-dark/10">
-                  <img
-                    src="public/assets/vector_HCY_RED.jpeg"
-                    alt="Character Vector"
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.target.src = "public/assets/vector_character.png";
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* 底部版权栏 */}
-              <div className="flex justify-between items-center text-xs sm:text-sm font-sans font-semibold pt-6 border-t border-[#161816]/20">
-                <p>2026 © Ooi Yun Pei</p>
-                <button
-                  type="button"
-                  onClick={handleScrollToTop}
-                  className="underline hover:opacity-80 transition-opacity cursor-pointer bg-transparent border-none p-0 text-inherit font-inherit select-none"
-                >
-                  Code by Yunpei
-                </button>
-              </div>
-
-            </div>
-
-          </section>
+          {/* 9. FOOTER SECTION (独立 section) */}
+          <Footer handleScrollToTop={handleScrollToTop} />
 
         </div>
       );
