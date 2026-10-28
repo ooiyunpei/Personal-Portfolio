@@ -7,7 +7,7 @@ const PROJECTS_DATA = [
     category: "Corporate Website & CMS",
     link: "https://genesistech.com.my",
     hasLink: true,
-    image: "public/assets/project_card.jpeg"
+    image: "images/Projects/cards_bg/G.png"
   },
   {
     id: "02",
@@ -16,7 +16,7 @@ const PROJECTS_DATA = [
     category: "Law Firm Platform",
     link: "https://presmat.com",
     hasLink: true,
-    image: "public/assets/project_card.jpeg"
+    image: "images/Projects/cards_bg/Presmat1.png"
   },
   {
     id: "03",
@@ -25,7 +25,7 @@ const PROJECTS_DATA = [
     category: "Web Application & Dashboard",
     link: "#",
     hasLink: false,
-    image: "public/assets/project_card.jpeg"
+    image: "images/Projects/cards_bg/Burger1.png"
   },
   {
     id: "04",
@@ -34,7 +34,7 @@ const PROJECTS_DATA = [
     category: "Interactive Portfolio",
     link: "#",
     hasLink: false,
-    image: "public/assets/project_card.jpeg"
+    image: "images/Projects/cards_bg/Me1.png"
   }
 ];
 

@@ -42,11 +42,11 @@ function Footer({ handleScrollToTop }) {
 
           <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-44 md:h-44 rounded-full overflow-hidden shrink-0 shadow-lg border-2 border-portfolio-dark/10">
             <img
-              src="public/assets/vector_HCY_RED.jpeg"
+              src="images/Home/vector_HCY_RED.jpeg"
               alt="Character Vector"
               className="w-full h-full object-cover"
               onError={(e) => {
-                e.target.src = "public/assets/vector_character.png";
+                e.target.src = "images/Home/vector_character.png";
               }}
             />
           </div>

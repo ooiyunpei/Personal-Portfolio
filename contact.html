@@ -213,25 +213,19 @@
           {/* 3. 主页面容器 */}
           <main className="w-full flex-1 flex flex-col justify-between md:justify-center px-6 sm:px-12 md:px-16 lg:px-20 max-w-6xl mx-auto overflow-hidden relative">
             
-            {/* ---------------- 移动端专用布局 ---------------- */}
+            {/* 移动端专用布局 */}
             <div className="flex md:hidden flex-col h-full w-full justify-between relative">
-              
-              {/* 上半部：文字自然展开，上下间距舒适透气 */}
               <div className="flex flex-col space-y-4 pt-[7vh] px-1 z-20 shrink-0">
-                
-                {/* 标题 */}
                 <div className="wipe-mask">
                   <h1 className="wipe-title font-anton text-[12.8vw] tracking-tight uppercase leading-none text-[#0b0c0b]">
                     LET'S CONNECT
                   </h1>
                 </div>
 
-                {/* 简介 */}
                 <p className="fade-float-in font-teachers text-[14px] leading-relaxed text-[#0b0c0b]/85 font-medium w-full max-w-[88vw] pr-2">
                   I am actively seeking software engineering internship opportunities and open to exciting collaborations. Feel free to send me a message or connect through social channels!
                 </p>
 
-                {/* LOCATION */}
                 <div className="fade-float-in pt-0.5">
                   <span className="text-[10px] uppercase font-bold tracking-wider text-[#7C837A] block mb-1">
                     LOCATION
@@ -241,22 +235,17 @@
                   </p>
                 </div>
 
-                {/* SOCIALS */}
                 <div className="fade-float-in pt-0.5">
                   <span className="text-[10px] uppercase font-bold tracking-wider text-[#7C837A] block mb-2">
                     SOCIALS
                   </span>
                   <div className="flex items-center gap-3">
-                    
-                    {/* 胶囊 Email 按钮 */}
                     <a
                       href="mailto:ooiyunpei@gmail.com"
                       className="h-9 px-5 rounded-full border-[1.8px] border-[#0b0c0b] flex items-center justify-center text-xs font-bold text-[#0b0c0b] active:bg-[#0b0c0b] active:text-[#e3e3df] transition-all shadow-sm"
                     >
                       Email
                     </a>
-
-                    {/* 正圆 LinkedIn */}
                     <a
                       href="https://www.linkedin.com/in/ooi-yun-pei-53b4362b8/"
                       target="_blank"
@@ -268,8 +257,6 @@
                         <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
                       </svg>
                     </a>
-
-                    {/* 正圆 GitHub */}
                     <a
                       href="https://github.com/ooiyunpei"
                       target="_blank"
@@ -281,38 +268,31 @@
                         <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
                       </svg>
                     </a>
-
                   </div>
                 </div>
-
               </div>
 
-              {/* 下半部：头发100%保全（object-contain object-top），只切小腿（蓝线截断贴底） */}
+              {/* 移动端图片路径对齐 images/Contact/ */}
               <div className="absolute inset-x-0 bottom-0 h-[48vh] flex items-start justify-center overflow-hidden pointer-events-none z-10">
                 <div className="relative w-[85vw] max-w-[340px] h-[65vh] flex items-start justify-center anxiety-float translate-y-[26%]">
                   <img
-                    src="public/assets/Anxiety_ISO.png"
+                    src="images/Contact/Anxiety_ISO.png"
                     alt="Anxiety Character"
                     className="w-full h-full object-contain object-top drop-shadow-2xl"
                     onError={(e) => {
-                      if (!e.target.dataset.triedJpg) {
-                        e.target.dataset.triedJpg = "true";
-                        e.target.src = "public/assets/Anxiety_ISO.jpg";
-                      } else {
-                        e.target.src = "Anxiety_ISO.png";
+                      if (!e.target.dataset.triedFallback) {
+                        e.target.dataset.triedFallback = "true";
+                        e.target.src = "images/Home/Anxiety_ISO.png";
                       }
                     }}
                   />
                 </div>
               </div>
-
             </div>
 
-            {/* ---------------- 桌面端（保持 100% 满意的原版本） ---------------- */}
+            {/* 桌面端布局 */}
             <div className="hidden md:grid md:grid-cols-12 gap-8 lg:gap-14 items-center">
-              
               <div className="md:col-span-7 flex flex-col justify-center max-w-xl">
-                
                 <div className="wipe-mask mb-4">
                   <h1 className="wipe-title font-anton text-6xl lg:text-7xl xl:text-8xl tracking-tight uppercase leading-none text-[#0b0c0b]">
                     LET'S CONNECT
@@ -336,10 +316,7 @@
                   <span className="text-xs uppercase font-bold tracking-wider text-[#7C837A] block mb-3">
                     Socials
                   </span>
-                  
-                  {/* 桌面端紧凑一行 + Email Me 翻转动效 */}
                   <div className="flex items-center gap-3">
-                    
                     <a
                       href="mailto:ooiyunpei@gmail.com"
                       className="email-btn h-11 px-4 rounded-xl border border-[#0b0c0b]/50 bg-transparent inline-flex items-center gap-2.5 text-sm font-bold text-[#0b0c0b] hover:bg-[#0b0c0b] hover:text-[#e3e3df] transition-all duration-300 shadow-sm group shrink-0"
@@ -379,35 +356,31 @@
                         <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
                       </svg>
                     </a>
-
                   </div>
                 </div>
-
               </div>
 
+              {/* 桌面端图片路径对齐 images/Contact/ */}
               <div className="md:col-span-5 flex items-center justify-center fade-float-in">
                 <div className="relative w-full max-w-[320px] lg:max-w-[380px] h-[52vh] flex items-center justify-center">
                   <img
-                    src="public/assets/Anxiety_ISO.png"
+                    src="images/Contact/Anxiety_ISO.png"
                     alt="Anxiety Character"
                     className="w-full h-full object-contain object-center drop-shadow-2xl anxiety-float"
                     onError={(e) => {
-                      if (!e.target.dataset.triedJpg) {
-                        e.target.dataset.triedJpg = "true";
-                        e.target.src = "public/assets/Anxiety_ISO.jpg";
-                      } else {
-                        e.target.src = "Anxiety_ISO.png";
+                      if (!e.target.dataset.triedFallback) {
+                        e.target.dataset.triedFallback = "true";
+                        e.target.src = "images/Home/Anxiety_ISO.png";
                       }
                     }}
                   />
                 </div>
               </div>
-
             </div>
 
           </main>
 
-          {/* 4. 底部版权栏（仅桌面端展示） */}
+          {/* 4. 底部版权栏 */}
           <footer className="w-full px-6 sm:px-12 md:px-16 py-3 border-t border-[#0b0c0b]/10 hidden md:flex justify-between items-center text-xs font-sans font-medium text-[#0b0c0b]/50 shrink-0">
             <span>2026 © Ooi Yun Pei</span>
             <span>Say Hello!</span>
