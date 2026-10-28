@@ -142,6 +142,7 @@
 
     const ROLES = ["SOFTWARE ENGINEERING", "DESIGNER", "ROBLOX DEVELOPER", "UI/UX DESIGNER"];
 
+    // 已经完全更新为统一的 images/ 结构[cite: 15]
     const PROJECTS_DATA = [
       {
         id: "01",
@@ -150,7 +151,7 @@
         category: "Corporate Website & CMS",
         link: "https://genesistech.com.my",
         hasLink: true,
-        image: "public/assets/project_card.jpeg"
+        image: "images/Projects/cards/G.png"
       },
       {
         id: "02",
@@ -159,7 +160,7 @@
         category: "Law Firm Platform",
         link: "https://presmat.com",
         hasLink: true,
-        image: "public/assets/project_card.jpeg"
+        image: "images/Projects/cards/Presmat1.png"
       },
       {
         id: "03",
@@ -168,7 +169,7 @@
         category: "Web Application & Dashboard",
         link: "#",
         hasLink: false,
-        image: "public/assets/project_card.jpeg"
+        image: "images/Projects/cards/Burger1.png"
       },
       {
         id: "04",
@@ -177,7 +178,7 @@
         category: "Interactive Portfolio",
         link: "#",
         hasLink: false,
-        image: "public/assets/project_card.jpeg"
+        image: "images/Projects/cards/Me1.png"
       }
     ];
 
@@ -338,10 +339,10 @@
       return (
         <div className="relative w-full bg-portfolio-bg text-portfolio-dark font-sans">
 
-          {/* 1. INTRO PRELOADER (组件) */}
+          {/* 1. INTRO PRELOADER */}
           <Preloader loading={loading} />
 
-          {/* 2. TOPBAR & FLOATING BURGER & FULL DARK OVERLAY (组件) */}
+          {/* 2. TOPBAR & FLOATING BURGER & FULL DARK OVERLAY */}
           <TopBar showBurger={showBurger} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
           {/* 3. HERO SECTION */}
@@ -413,13 +414,14 @@
               </div>
             </div>
 
+            {/* Hero 照片路径指向 images/Home/[cite: 15] */}
             <div className="absolute inset-x-0 bottom-0 flex flex-col items-center justify-end z-20 pointer-events-none">
               <div className="w-[360px] sm:w-[380px] md:w-[480px] lg:w-[530px] h-[56vh] sm:h-[56vh] md:h-[76vh] relative flex items-end justify-center">
                 <img
-                  src="public/assets/Yunpei_Hero.png"
+                  src="images/Home/Yunpei_Hero.png"
                   alt="Ooi Yun Pei"
                   className="w-full h-full object-contain object-bottom drop-shadow-2xl z-10 pointer-events-auto"
-                  onError={(e) => { e.target.src = "public/assets/Yunpei_Profile.JPEG"; }}
+                  onError={(e) => { e.target.src = "images/Home/Yunpei_Profile.JPEG"; }}
                 />
               </div>
 
@@ -440,7 +442,7 @@
             </div>
           </section>
 
-          {/* 4. ABOUT ME SECTION */}
+          {/* 4. ABOUT ME SECTION (图片路径指向 images/Home/)[cite: 15] */}
           <section
             id="about"
             ref={aboutRef}
@@ -465,12 +467,11 @@
                   style={{ transform: `translateY(${aboutScrollOffset * 0.3}px)` }}
                 >
                   <img
-                    src="public/assets/ABT_SEC_PIC.jpeg"
+                    src="images/Home/ABT_SEC_PIC.jpeg"
                     alt="About Ooi Yun Pei"
                     className="w-full h-full object-cover object-[54%_20%] scale-[1.12] hover:scale-[1.18] transition-transform duration-700 ease-out"
                     onError={(e) => {
-                      e.target.src = "ABT_SEC_PIC.jpeg";
-                      e.target.onerror = () => { e.target.src = "public/assets/Yunpei_Profile.JPEG"; };
+                      e.target.src = "images/Home/Yunpei_Profile.JPEG";
                     }}
                   />
                 </div>
@@ -480,12 +481,11 @@
                   style={{ transform: `translateY(${aboutScrollOffset * 0.6}px)` }}
                 >
                   <img
-                    src="public/assets/ABT_SEC_TUTOR.jpeg"
+                    src="images/Home/ABT_SEC_TUTOR.jpeg"
                     alt="ABT SEC TUTOR"
                     className="w-full h-full object-cover object-[center_60%] hover:scale-105 transition-transform duration-700 ease-out"
                     onError={(e) => {
-                      e.target.src = "ABT_SEC_TUTOR.jpeg";
-                      e.target.onerror = () => { e.target.src = "public/assets/Yunpei_Profile.JPEG"; };
+                      e.target.src = "images/Home/Yunpei_Profile.JPEG";
                     }}
                   />
                 </div>
@@ -495,12 +495,11 @@
                   style={{ transform: `translateY(${aboutScrollOffset}px)` }}
                 >
                   <img
-                    src="public/assets/ABT_SEC_D4P.jpeg"
+                    src="images/Home/ABT_SEC_D4P.jpeg"
                     alt="ABT SEC D4P"
                     className="w-full h-full object-cover object-[center_35%] hover:scale-105 transition-transform duration-700 ease-out"
                     onError={(e) => {
-                      e.target.src = "ABT_SEC_D4P.jpeg";
-                      e.target.onerror = () => { e.target.src = "public/assets/Yunpei_Hero.png"; };
+                      e.target.src = "images/Home/Yunpei_Hero.png";
                     }}
                   />
                 </div>
@@ -508,7 +507,7 @@
             </div>
           </section>
 
-          {/* 5. EDUCATION SECTION */}
+          {/* 5. EDUCATION SECTION (Logo 路径指向 images/Home/)[cite: 15] */}
           <section
             id="education"
             ref={educationRef}
@@ -550,7 +549,7 @@
 
                 <div className="flex items-center justify-between sm:justify-start gap-4 sm:gap-6 shrink-0 max-w-full bg-white/5 backdrop-blur-md px-4 sm:px-6 py-3 sm:py-3.5 rounded-2xl border border-white/10 lg:ml-auto">
                   <img
-                    src="public/assets/INTI_Logo.png"
+                    src="images/Home/INTI_Logo.png"
                     alt="INTI International College Penang"
                     className="h-6 sm:h-8 md:h-10 max-w-[120px] sm:max-w-none w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
                     onError={(e) => {
@@ -559,7 +558,7 @@
                   />
                   <div className="h-5 sm:h-6 w-px bg-white/20" />
                   <img
-                    src="public/assets/CU_Logo.png"
+                    src="images/Home/CU_Logo.png"
                     alt="Coventry University"
                     className="h-6 sm:h-8 md:h-10 max-w-[120px] sm:max-w-none w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
                     onError={(e) => {
@@ -740,10 +739,10 @@
             <div className="w-full"></div>
           </section>
 
-          {/* 8. TESTIMONIALS SECTION (独立 section) */}
+          {/* 8. TESTIMONIALS SECTION */}
           <Testimonials />
 
-          {/* 9. FOOTER SECTION (独立 section) */}
+          {/* 9. FOOTER SECTION */}
           <Footer handleScrollToTop={handleScrollToTop} />
 
         </div>

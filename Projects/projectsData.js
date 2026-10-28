@@ -1,6 +1,4 @@
 // Projects/projectsData.js
-
-// 1. 可自由扩展的标签列表（以后加新分类直接在数组加一项即可）
 window.projectCategories = [
   { id: "all", label: "All" },
   { id: "company", label: "Company Projects" },
@@ -8,7 +6,6 @@ window.projectCategories = [
   { id: "personal", label: "Personal Projects" }
 ];
 
-// 2. 项目列表（新增 type 字段对应 category id）
 window.projectsList = [
   {
     pillarNum: "01",
@@ -16,7 +13,7 @@ window.projectsList = [
     category: "Company Revamp",
     title: "Genesis Tech Solutions",
     description: "Official corporate website revitalization with modern responsive layout and solutions showcase.",
-    bgImage: "Project Cards/G.png",
+    bgImage: "images/Projects/cards_bg/G.png",
     link: "https://genesistech.com.my",
     displayLink: "genesistech.com.my",
     status: "Live",
@@ -28,7 +25,7 @@ window.projectsList = [
     category: "Client Revamp",
     title: "Presgrave & Matthews",
     description: "Comprehensive firm portal redesign focusing on brand authority, structured navigation, and accessibility.",
-    bgImage: "Project Cards/Presmat1.png",
+    bgImage: "images/Projects/cards_bg/Presmat1.png",
     link: "https://presmat.com",
     displayLink: "presmat.com",
     status: "Live",
@@ -40,7 +37,7 @@ window.projectsList = [
     category: "College Project",
     title: "Food Ordering System",
     description: "Full-stack web application designed for interactive dining workflows, menu browsing, and real-time checkout.",
-    bgImage: "Project Cards/Burger1.png",
+    bgImage: "images/Projects/cards_bg/Burger1.png",
     link: null,
     displayLink: "Deploying Soon",
     status: "Pending",
@@ -52,7 +49,7 @@ window.projectsList = [
     category: "Portfolio",
     title: "Personal Portfolio",
     description: "Minimalist portfolio showcasing academic history, technical skills, interactive modules, and custom domain.",
-    bgImage: "Project Cards/Me1.png",
+    bgImage: "images/Projects/cards_bg/Me1.png",
     link: "https://yunpeiooi.my",
     displayLink: "yunpeiooi.my",
     status: "Live",
